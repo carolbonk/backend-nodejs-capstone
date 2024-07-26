@@ -1,12 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const connectToDatabase = require('../models/db');
+require('dotenv').config();
 
 // Search for gifts
 router.get('/', async (req, res, next) => {
     try {
         // Task 1: Connect to MongoDB using connectToDatabase database. Remember to use the await keyword and store the connection in `db`
-        // {{insert code here}}
+        const db = await connectToDatabase();
 
         const collection = db.collection("gifts");
 
@@ -30,10 +31,9 @@ router.get('/', async (req, res, next) => {
             query.age_years = { $lte: parseInt(req.query.age_years) };
         }
 
+        console.log("My query: ", query);
         // Task 4: Fetch filtered gifts using the find(query) method. Make sure to use await and store the result in the `gifts` constant
-        // {{insert code here here}}
         const gifts = await collection.find(query).toArray();
-
         res.json(gifts);
     } catch (e) {
         next(e);
