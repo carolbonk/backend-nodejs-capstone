@@ -26,14 +26,16 @@ const upload = multer({ storage: storage });
 router.get('/', async (req, res, next) => {
     logger.info('/ called');
     try {
-        //Step 2: task 1 - insert code here
+ // Task 1: Retrieve the database connection from db.js and store the connection to db constant
         const db = await connectToDatabase();
-        //Step 2: task 2 - insert code here
-        //Step 2: task 3 - insert code heretoArray();
-        //Step 2: task 4 - insert code here
 
-        const collection = db.collection("secondChanceItems");
+        // Task 2: Use the collection() method to retrieve the secondChanceItems collection
+        const collection = db.collection('secondChanceItems');
+
+        // Task 3: Fetch all secondChanceItems using the collection.find() method. Chain it with the toArray() method to convert to a JSON array
         const secondChanceItems = await collection.find({}).toArray();
+
+        // Task 4: Return the secondChanceItems using the res.json() method
         res.json(secondChanceItems);
     } catch (e) {
         logger.console.error('oops something went wrong', e)
